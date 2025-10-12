@@ -61,9 +61,10 @@ function App() {
   };
 
   // If logged in, show ProtectedPage
-  if (token) {
-    return <ProtectedPage username={loggedInUser} logout={logout} />;
-  }
+if (token) {
+  return <ProtectedPage username={loggedInUser} token={token} logout={logout} />;
+}
+
 
   // If not logged in, show jobs + signup/login
   return (
