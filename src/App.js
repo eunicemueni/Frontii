@@ -5,9 +5,13 @@ function App() {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const res = await fetch("https://backendd-5u.onrender.com/jobs");
-      const data = await res.json();
-      setJobs(data);
+      try {
+        const res = await fetch("https://backendd-5u.onrender.com/jobs");
+        const data = await res.json();
+        setJobs(data);
+      } catch (err) {
+        console.error("Error fetching jobs:", err);
+      }
     };
     fetchJobs();
   }, []);
@@ -16,9 +20,13 @@ function App() {
     <div>
       <h1>SkillMatch Jobs</h1>
       <ul>
-        {jobs.map(job => (
-          <li key={job.id}>{job.title} at {job.company}</li>
-        ))}
+        {jobs.length > 0 ? (
+          jobs.map(job => (
+            <li key={job.id}>{job.title} at {job.company}</li>
+          ))
+        ) : (
+          <li>No jobs available</li>
+        )}
       </ul>
     </div>
   );
