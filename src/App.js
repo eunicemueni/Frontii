@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 
+const BASE_URL = "https://backendd-5u.onrender.com";
+
 function App() {
   const [jobs, setJobs] = useState([]);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [token, setToken] = useState('');
 
+  // Fetch jobs
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await fetch("https://backendd-5u.onrender.com/jobs");
+        const res = await fetch(`${BASE_URL}/jobs`);
         const data = await res.json();
         setJobs(data);
       } catch (err) {
@@ -16,32 +23,9 @@ function App() {
     fetchJobs();
   }, []);
 
-  return (
-    <div>
-      <h1>SkillMatch Jobs</h1>
-      <ul>
-        {jobs.length > 0 ? (
-          jobs.map(job => (
-            <li key={job.id}>{job.title} at {job.company}</li>
-          ))
-        ) : (
-          <li>No jobs available</li>
-        )}
-      </ul>
-    </div>
-  );
-}
-
-export default App;
-import { useState } from 'react';
-
-function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-
+  // Signup
   const signup = async () => {
-    const res = await fetch("https://backendd-5u.onrender.com/signup", {
+    const res = await fetch(`${BASE_URL}/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password })
@@ -50,9 +34,28 @@ function App() {
     setMessage(data.message);
   };
 
+  // Login
+  const login = async () => {
+    const res = await fetch(`${BASE_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    setMessage(data.message);
+    if (data.token) setToken(data.token);
+  };
+
   return (
-    <div>
-      <h1>SkillMatch Signup</h1>
+    <div style={{ padding: '20px' }}>
+      <h1>SkillMatch Jobs</h1>
+      <ul>
+        {jobs.length > 0 ? jobs.map(job => (
+          <li key={job.id}>{job.title} at {job.company}</li>
+        )) : <li>No jobs available</li>}
+      </ul>
+
+      <h2>Signup / Login</h2>
       <input
         placeholder="Username"
         value={username}
@@ -64,8 +67,12 @@ function App() {
         value={password}
         onChange={e => setPassword(e.target.value)}
       />
-      <button onClick={signup}>Signup</button>
-      <p>{message}</p>
+      <div style={{ marginTop: '10px' }}>
+        <button onClick={signup}>Signup</button>
+        <button onClick={login} style={{ marginLeft: '10px' }}>Login</button>
+      </div>
+      {message && <p>{message}</p>}
+      {token && <p>Token: {token}</p>}
     </div>
   );
 }
