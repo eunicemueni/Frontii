@@ -8,6 +8,7 @@ function App() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [token, setToken] = useState('');
+  const [loggedInUser, setLoggedInUser] = useState('');
 
   // Fetch jobs
   useEffect(() => {
@@ -43,36 +44,60 @@ function App() {
     });
     const data = await res.json();
     setMessage(data.message);
-    if (data.token) setToken(data.token);
+    if (data.token) {
+      setToken(data.token);
+      setLoggedInUser(username);
+      setUsername('');
+      setPassword('');
+    }
+  };
+
+  // Logout
+  const logout = () => {
+    setToken('');
+    setLoggedInUser('');
+    setMessage('');
   };
 
   return (
     <div style={{ padding: '20px' }}>
       <h1>SkillMatch Jobs</h1>
       <ul>
-        {jobs.length > 0 ? jobs.map(job => (
-          <li key={job.id}>{job.title} at {job.company}</li>
-        )) : <li>No jobs available</li>}
+        {jobs.length > 0 ? (
+          jobs.map(job => (
+            <li key={job.id}>{job.title} at {job.company}</li>
+          ))
+        ) : (
+          <li>No jobs available</li>
+        )}
       </ul>
 
-      <h2>Signup / Login</h2>
-      <input
-        placeholder="Username"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-      <div style={{ marginTop: '10px' }}>
-        <button onClick={signup}>Signup</button>
-        <button onClick={login} style={{ marginLeft: '10px' }}>Login</button>
-      </div>
-      {message && <p>{message}</p>}
-      {token && <p>Token: {token}</p>}
+      {!token ? (
+        <div style={{ marginTop: '20px' }}>
+          <h2>Signup / Login</h2>
+          <input
+            placeholder="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <div style={{ marginTop: '10px' }}>
+            <button onClick={signup}>Signup</button>
+            <button onClick={login} style={{ marginLeft: '10px' }}>Login</button>
+          </div>
+          {message && <p>{message}</p>}
+        </div>
+      ) : (
+        <div style={{ marginTop: '20px' }}>
+          <h2>Welcome, {loggedInUser}!</h2>
+          <button onClick={logout}>Logout</button>
+        </div>
+      )}
     </div>
   );
 }
