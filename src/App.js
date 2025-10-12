@@ -33,3 +33,41 @@ function App() {
 }
 
 export default App;
+import { useState } from 'react';
+
+function App() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+
+  const signup = async () => {
+    const res = await fetch("https://backendd-5u.onrender.com/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    setMessage(data.message);
+  };
+
+  return (
+    <div>
+      <h1>SkillMatch Signup</h1>
+      <input
+        placeholder="Username"
+        value={username}
+        onChange={e => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+      />
+      <button onClick={signup}>Signup</button>
+      <p>{message}</p>
+    </div>
+  );
+}
+
+export default App;
