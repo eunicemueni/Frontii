@@ -7,8 +7,8 @@ function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [token, setToken] = useState('');
-  const [loggedInUser, setLoggedInUser] = useState('');
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem('username') || '');
 
   // Fetch jobs
   useEffect(() => {
@@ -47,6 +47,8 @@ function App() {
     if (data.token) {
       setToken(data.token);
       setLoggedInUser(username);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('username', username);
       setUsername('');
       setPassword('');
     }
@@ -57,6 +59,8 @@ function App() {
     setToken('');
     setLoggedInUser('');
     setMessage('');
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
   };
 
   return (
