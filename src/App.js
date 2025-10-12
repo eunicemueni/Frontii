@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ProtectedPage from './ProtectedPage';
 
 const BASE_URL = "https://backendd-5u.onrender.com";
 
@@ -10,7 +11,6 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem('username') || '');
 
-  // Fetch jobs
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -18,13 +18,12 @@ function App() {
         const data = await res.json();
         setJobs(data);
       } catch (err) {
-        console.error("Error fetching jobs:", err);
+        console.error(err);
       }
     };
     fetchJobs();
   }, []);
 
-  // Signup
   const signup = async () => {
     const res = await fetch(`${BASE_URL}/signup`, {
       method: "POST",
@@ -35,7 +34,6 @@ function App() {
     setMessage(data.message);
   };
 
-  // Login
   const login = async () => {
     const res = await fetch(`${BASE_URL}/login`, {
       method: "POST",
@@ -54,7 +52,6 @@ function App() {
     }
   };
 
-  // Logout
   const logout = () => {
     setToken('');
     setLoggedInUser('');
@@ -63,6 +60,12 @@ function App() {
     localStorage.removeItem('username');
   };
 
+  // If logged in, show ProtectedPage
+  if (token) {
+    return <ProtectedPage username={loggedInUser} logout={logout} />;
+  }
+
+  // If not logged in, show jobs + signup/login
   return (
     <div style={{ padding: '20px' }}>
       <h1>SkillMatch Jobs</h1>
@@ -76,34 +79,28 @@ function App() {
         )}
       </ul>
 
-      {!token ? (
-        <div style={{ marginTop: '20px' }}>
-          <h2>Signup / Login</h2>
-          <input
-            placeholder="Username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          <div style={{ marginTop: '10px' }}>
-            <button onClick={signup}>Signup</button>
-            <button onClick={login} style={{ marginLeft: '10px' }}>Login</button>
-          </div>
-          {message && <p>{message}</p>}
+      <div style={{ marginTop: '20px' }}>
+        <h2>Signup / Login</h2>
+        <input
+          placeholder="Username"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <div style={{ marginTop: '10px' }}>
+          <button onClick={signup}>Signup</button>
+          <button onClick={login} style={{ marginLeft: '10px' }}>Login</button>
         </div>
-      ) : (
-        <div style={{ marginTop: '20px' }}>
-          <h2>Welcome, {loggedInUser}!</h2>
-          <button onClick={logout}>Logout</button>
-        </div>
-      )}
+        {message && <p>{message}</p>}
+      </div>
     </div>
   );
 }
 
 export default App;
+
