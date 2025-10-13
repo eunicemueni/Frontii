@@ -1,4 +1,12 @@
 import React from "react";
+<nav className="navbar">
+  <div className="logo">SkillMatch</div>
+  <ul className="nav-links">
+    <li>Jobs</li>
+    <li>Login</li>
+    <li>Signup</li>
+  </ul>
+</nav>
 
 const Navbar = () => {
   return (
