@@ -1,0 +1,96 @@
+/* Home.css */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f0f4f8;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #0073b1; /* LinkedIn blue */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-buttons button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.btn-teal {
+  background-color: #008080;
+  color: white;
+}
+
+.btn-gold {
+  background-color: #d4af37;
+  color: white;
+}
+
+/* Jobs Section */
+.jobs-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 30px;
+  justify-content: center;
+}
+
+.job-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 250px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s;
+}
+
+.job-card:hover {
+  transform: scale(1.05);
+}
+
+.job-title {
+  color: #0073b1;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.job-company {
+  color: #555;
+}
+
+/* No jobs */
+.no-jobs {
+  color: #555;
+  font-size: 18px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Footer */
+.footer {
+  background-color: #0073b1;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: auto;
+}
