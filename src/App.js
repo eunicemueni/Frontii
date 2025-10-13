@@ -1,62 +1,57 @@
 // src/App.js
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./App.css";
 
-function Navbar() {
-  return (
-    <nav className="navbar">
-      <div className="logo">SkillMatch</div>
-      <ul className="nav-links">
-        <li>Jobs</li>
-        <li>Login</li>
-        <li>Signup</li>
-      </ul>
-    </nav>
-  );
-}
-
-function JobGrid() {
+function App() {
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('.https://backendd-5ll.onrender.com/') // your backend URL
-      .then(res => setJobs(res.data))
-      .catch(err => console.error('Error fetching jobs:', err));
+    // Replace this URL with your live backend URL
+    axios.get("https://backendd-5ll.onrender.com/jobs")
+      .then((res) => {
+        setJobs(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching jobs:", err);
+        setLoading(false);
+      });
   }, []);
 
   return (
-    <div className="job-grid">
-      {jobs.length === 0 ? (
-        <p>No jobs available</p>
-      ) : (
-        jobs.map((job, index) => (
-          <div key={index} className="job-card">
-            <h3>{job.title}</h3>
-            <p>{job.company}</p>
-            <button className="apply-btn">Apply</button>
-          </div>
-        ))
-      )}
-    </div>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="footer">
-      &copy; 2025 SkillMatch. All rights reserved.
-    </footer>
-  );
-}
-
-function App() {
-  return (
     <div className="main-container">
-      <Navbar />
-      <h1>SkillMatch Jobs</h1>
-      <JobGrid />
-      <Footer />
+      <header className="navbar">
+        <div className="logo">SkillMatch</div>
+        <ul className="nav-links">
+          <li>Jobs</li>
+          <li>Login</li>
+          <li>Signup</li>
+        </ul>
+      </header>
+
+      <h1>Explore Jobs</h1>
+
+      {loading ? (
+        <p style={{ textAlign: "center" }}>Loading jobs...</p>
+      ) : jobs.length === 0 ? (
+        <p style={{ textAlign: "center" }}>No jobs available</p>
+      ) : (
+        <div className="job-grid">
+          {jobs.map((job) => (
+            <div key={job._id} className="job-card">
+              <h3>{job.title}</h3>
+              <p>{job.company}</p>
+              <button className="apply-btn">Apply Now</button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <footer className="footer">
+        © 2025 SkillMatch. All rights reserved.
+      </footer>
     </div>
   );
 }
