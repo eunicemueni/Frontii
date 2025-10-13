@@ -1,12 +1,14 @@
 /* src/App.css */
 
+/* Reset body and default styles */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f0f4f8; /* light gray */
+  font-family: "Arial", sans-serif;
+  background-color: #f0f4f8; /* light gray background */
   color: #333;
 }
 
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -20,6 +22,8 @@ body {
   list-style: none;
   display: flex;
   gap: 1.5rem;
+  margin: 0;
+  padding: 0;
 }
 
 .navbar .nav-links li {
@@ -36,37 +40,52 @@ body {
   font-weight: bold;
 }
 
+/* Main container */
 .main-container {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+/* Page header */
 h1 {
   text-align: center;
-  color: #0073b1; /* LinkedIn Blue */
+  color: #0073b1;
+  margin-bottom: 2rem;
 }
 
+/* Job grid */
 .job-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
 }
 
+/* Individual job cards */
 .job-card {
   background-color: white;
   border-radius: 10px;
   padding: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .job-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
+.job-card h3 {
+  margin-top: 0;
+  color: #0073b1;
+}
+
+.job-card p {
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+/* Apply button */
 .apply-btn {
   background-color: #008080; /* Teal */
   color: white;
@@ -81,10 +100,12 @@ h1 {
   background-color: #007070;
 }
 
+/* Footer */
 .footer {
-  background-color: #0073b1; /* LinkedIn Blue */
+  background-color: #0073b1;
   color: white;
   text-align: center;
   padding: 1rem;
   margin-top: 3rem;
+  font-size: 0.9rem;
 }
