@@ -1,61 +1,64 @@
 // src/App.js
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./App.css";
+import React from 'react';
+import './App.css';
 
-function App() {
-  const [jobs, setJobs] = useState([]);
+const jobs = [
+  { title: "Frontend Developer", company: "Kairah Tech" },
+  { title: "Backend Developer", company: "SkillMatch" },
+  { title: "Fullstack Developer", company: "Kairah Corp" },
+  { title: "UI/UX Designer", company: "SkillMatch Design" },
+  { title: "Project Manager", company: "Kairah Tech" },
+  { title: "Data Scientist", company: "SkillMatch AI" },
+  { title: "Mobile App Developer", company: "Kairah Mobile" },
+  { title: "DevOps Engineer", company: "SkillMatch Cloud" },
+  { title: "QA Engineer", company: "Kairah Tech" },
+  { title: "Product Manager", company: "SkillMatch Products" },
+];
 
-  useEffect(() => {
-    axios.get("https://backendd-5ll.onrender.com/") // your backend URL
-      .then(res => setJobs(res.data))
-      .catch(err => console.error(err));
-  }, []);
-
+function Navbar() {
   return (
-    <div className="App">
-      <Navbar />
-      <main className="main-container">
-        <h1>Explore Jobs at SkillMatch</h1>
-        <div className="job-grid">
-          {jobs.length === 0 ? (
-            <p>No jobs available</p>
-          ) : (
-            jobs.map(job => (
-              <JobCard key={job._id} title={job.title} company={job.company} />
-            ))
-          )}
+    <nav className="navbar">
+      <div className="logo">SkillMatch</div>
+      <ul className="nav-links">
+        <li>Jobs</li>
+        <li>Login</li>
+        <li>Signup</li>
+      </ul>
+    </nav>
+  );
+}
+
+function JobGrid() {
+  return (
+    <div className="job-grid">
+      {jobs.map((job, index) => (
+        <div key={index} className="job-card">
+          <h3>{job.title}</h3>
+          <p>{job.company}</p>
+          <button className="apply-btn">Apply</button>
         </div>
-      </main>
-      <Footer />
+      ))}
     </div>
   );
 }
 
-const Navbar = () => (
-  <nav className="navbar">
-    <div className="logo">SkillMatch</div>
-    <ul className="nav-links">
-      <li>Home</li>
-      <li>Jobs</li>
-      <li>Login</li>
-      <li>Signup</li>
-    </ul>
-  </nav>
-);
+function Footer() {
+  return (
+    <footer className="footer">
+      &copy; 2025 SkillMatch. All rights reserved.
+    </footer>
+  );
+}
 
-const JobCard = ({ title, company }) => (
-  <div className="job-card">
-    <h3>{title}</h3>
-    <p>{company}</p>
-    <button className="apply-btn">Apply Now</button>
-  </div>
-);
-
-const Footer = () => (
-  <footer className="footer">
-    <p>&copy; 2025 SkillMatch. All rights reserved.</p>
-  </footer>
-);
+function App() {
+  return (
+    <div className="main-container">
+      <Navbar />
+      <h1>SkillMatch Jobs</h1>
+      <JobGrid />
+      <Footer />
+    </div>
+  );
+}
 
 export default App;
