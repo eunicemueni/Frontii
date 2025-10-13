@@ -8,7 +8,7 @@ const Home = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get("https://your-backend-url.onrender.com/jobs");
+        const res = await axios.get("https://backendd-5ll.onrender.com/");
         setJobs(res.data);
       } catch (err) {
         console.error("Error fetching jobs:", err);
