@@ -1,6 +1,7 @@
+// Home.js
 import React, { useEffect, useState } from "react";
-import JobCard from "./JobCard";
 import axios from "axios";
+import "./Home.css"; // Make sure to create this CSS file
 
 const Home = () => {
   const [jobs, setJobs] = useState([]);
@@ -8,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get("https://backendd-5ll.onrender.com/");
+        const res = await axios.get("https://backendd-5ll.onrender.com/jobs"); // Your backend URL
         setJobs(res.data);
       } catch (err) {
         console.error("Error fetching jobs:", err);
@@ -18,17 +19,34 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-[#F5F5F5] min-h-screen p-8">
-      <h1 className="text-3xl font-bold mb-6 text-[#0A66C2]">Available Jobs</h1>
-      <div>
+    <div className="home-container">
+      {/* Navbar */}
+      <nav className="navbar">
+        <h1 className="logo">SkillMatch</h1>
+        <div className="nav-buttons">
+          <button className="btn-teal">Login</button>
+          <button className="btn-gold">Signup</button>
+        </div>
+      </nav>
+
+      {/* Jobs Section */}
+      <section className="jobs-section">
         {jobs.length > 0 ? (
           jobs.map((job) => (
-            <JobCard key={job._id} title={job.title} company={job.company} premium={job.premium} />
+            <div key={job._id} className="job-card">
+              <h2 className="job-title">{job.title}</h2>
+              <p className="job-company">{job.company}</p>
+            </div>
           ))
         ) : (
-          <p className="text-gray-700">No jobs available</p>
+          <p className="no-jobs">No jobs available</p>
         )}
-      </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        &copy; 2025 SkillMatch. All rights reserved.
+      </footer>
     </div>
   );
 };
