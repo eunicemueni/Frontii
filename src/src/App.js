@@ -7,7 +7,7 @@ function App() {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    axios.get("https://backen-g64w.onrender.com/jobs") // your backend URL
+    axios.get("https://backendd-5ll.onrender.com/") // your backend URL
       .then(res => setJobs(res.data))
       .catch(err => console.error(err));
   }, []);
