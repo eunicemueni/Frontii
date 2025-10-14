@@ -1,98 +1,35 @@
 /* src/index.css */
 
-/* Reset & base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Tailwind base */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SkillMatch brand colors */
+:root {
+  --deep-blue: #001f3f;
+  --teal: #008080;
+  --gold: #D4AF37;
 }
 
-html, body, #root {
-  height: 100%;
-  font-family: 'Inter', sans-serif;
-  background-color: #0B0E15;
-  color: #E0E0E0;
-  scroll-behavior: smooth;
+/* Hero shimmer */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--deep-blue) 0%,
+    var(--gold) 50%,
+    var(--teal) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #0B0E15;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #D4AF37;
-  border-radius: 4px;
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* Buttons */
-button, a {
-  transition: all 0.2s ease-in-out;
-}
-
-button:hover, a:hover {
-  opacity: 0.9;
-}
-
-/* Cards */
-div[class*="rounded-xl"] {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-div[class*="rounded-xl"]:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
-}
-
-/* Inputs */
-input, textarea {
-  outline: none;
-  background: rgba(255,255,255,0.05);
-  color: #E0E0E0;
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  width: 100%;
-  font-size: 0.9rem;
-}
-input::placeholder, textarea::placeholder {
-  color: #AAAAAA;
-}
-
-/* Shimmer animation */
-@keyframes shimmer-diag {
-  0% { background-position: -600px -600px; }
-  100% { background-position: 600px 600px; }
-}
-
-/* Modal overlay */
-.fixed.inset-0.z-50 {
-  animation: fadeIn 0.2s ease;
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-/* Responsive text */
-h1, h2, h3, h4 {
-  line-height: 1.2;
-}
-p {
-  line-height: 1.6;
-}
-
-/* Utility classes */
-.text-[#D4AF37] { color: #D4AF37; }
-.bg-[#D4AF37] { background-color: #D4AF37; }
-.bg-[#0F4BE5] { background-color: #0F4BE5; }
-.hover\:shadow-lg:hover { box-shadow: 0 8px 30px rgba(212,175,55,0.3); }
-
-/* Responsive grid adjustments */
-@media (max-width: 768px) {
-  .grid-cols-2 { grid-template-columns: 1fr !important; }
-  .flex-wrap { flex-wrap: wrap !important; }
+/* Clickable cards */
+.card {
+  @apply cursor-pointer transition-transform transform hover:scale-105 shadow-lg p-4 rounded-xl bg-white;
 }
