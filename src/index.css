@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes shimmer-diag {
+  0% { background-position: -600px -600px; }
+  100% { background-position: 600px 600px; }
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0B0E15;
+  color: #F0F0F0;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-overlay { position: fixed; inset:0; background: rgba(0,0,0,0.6); z-index:50; display:flex; align-items:center; justify-content:center; }
+.modal-box { background:#071124; border:1px solid rgba(255,255,255,0.1); border-radius:1rem; padding:1.5rem; max-width:90%; }
+.shimmer-bg { background: linear-gradient(120deg, rgba(212,175,55,0.06) 0%, rgba(255,255,255,0.02) 25%, rgba(212,175,55,0.10) 50%, rgba(255,255,255,0.02) 75%, rgba(212,175,55,0.06) 100%); background-size:1000px 1000px; animation: shimmer-diag 7s linear infinite; }
+.animate-pulse { @apply bg-white/5; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+button { cursor:pointer; transition:all 0.2s ease-in-out; }
+button:hover { transform: translateY(-1px); }
