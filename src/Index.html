@@ -4,25 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Skillmatch</title>
-  <!-- React & ReactDOM from CDN -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- React & ReactDOM CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
 </head>
 <body>
   <div id="root"></div>
 
-  <script>
-    const e = React.createElement;
+  <script type="text/javascript">
+    const { useState } = React;
 
     function App() {
-      return e('div', { style: { textAlign: 'center', marginTop: '50px' } },
-        e('h1', null, 'Skillmatch is Running!'),
-        e('p', null, 'Single-file React app, ready for deployment.')
+      const [input, setInput] = useState('');
+      const [response, setResponse] = useState('');
+
+      const handleSubmit = async () => {
+        if (!input) return;
+        try {
+          // Example API call; replace with your real Skillmatch API
+          const res = await axios.get(`https://jsonplaceholder.typicode.com/todos/${input}`);
+          setResponse(JSON.stringify(res.data, null, 2));
+        } catch (err) {
+          setResponse('Error fetching data');
+        }
+      };
+
+      return React.createElement(
+        'div',
+        { style: { textAlign: 'center', marginTop: '50px' } },
+        React.createElement('h1', null, 'Skillmatch Frontend Restored'),
+        React.createElement('input', {
+          type: 'text',
+          value: input,
+          placeholder: 'Enter ID',
+          onChange: e => setInput(e.target.value),
+          style: { padding: '8px', width: '200px', marginRight: '10px' }
+        }),
+        React.createElement('button', { onClick: handleSubmit, style: { padding: '8px 16px' } }, 'Fetch'),
+        React.createElement('pre', { style: { marginTop: '20px', textAlign: 'left', display: 'inline-block' } }, response)
       );
     }
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(e(App));
+    root.render(React.createElement(App));
   </script>
 </body>
 </html>
