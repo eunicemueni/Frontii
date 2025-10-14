@@ -1,13 +1,14 @@
-// frontend/src/App.jsx
+// src/App.jsx
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Logo from "./assets/skillmatch-logo.png"; // final SkillMatch logo
+import Logo from "./assets/skillmatch-logo.png";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [showPricing, setShowPricing] = useState(false);
   const [showEmployer, setShowEmployer] = useState(false);
   const [showApply, setShowApply] = useState(false);
+  const [showTask, setShowTask] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
   const [selectedTask, setSelectedTask] = useState(null);
 
@@ -17,17 +18,17 @@ export default function App() {
   }, []);
 
   const fakeJobs = [
-    { id: 1, title: "Frontend Developer", company: "Kairah Tech", type: "Remote", salary: "$700 - $1,200", desc: "Build amazing UIs using React and TailwindCSS." },
-    { id: 2, title: "Content Writer", company: "SkillMatch Media", type: "Remote", salary: "$300 - $700", desc: "Write engaging articles and social media content." },
-    { id: 3, title: "Product Manager", company: "Kairah Products", type: "Remote", salary: "$1,000 - $2,000", desc: "Lead product development and strategy." },
-    { id: 4, title: "UI/UX Designer", company: "SkillMatch Design", type: "Remote", salary: "$400 - $900", desc: "Design intuitive interfaces for web & mobile." }
+    { id: 1, title: "Frontend Developer", company: "Kairah Tech", type: "Remote", salary: "$700 - $1,200", description: "Build responsive web apps with React & TailwindCSS. Remote position." },
+    { id: 2, title: "Content Writer", company: "SkillMatch Media", type: "Remote", salary: "$300 - $700", description: "Write SEO content for blogs and marketing materials. Remote." },
+    { id: 3, title: "Product Manager", company: "Kairah Products", type: "Remote", salary: "$1,000 - $2,000", description: "Lead product roadmap, manage releases, and coordinate teams." },
+    { id: 4, title: "UI/UX Designer", company: "SkillMatch Design", type: "Remote", salary: "$400 - $900", description: "Design user interfaces, create wireframes, and prototypes." }
   ];
 
   const fakeTasks = [
-    { id: 1, title: "Watch a short video", reward: 0.10, est: "1-2 min", desc: "Watch a 30-second video and submit proof." },
-    { id: 2, title: "Share a post", reward: 0.20, est: "2-3 min", desc: "Share our post on your social media." },
-    { id: 3, title: "Answer a survey", reward: 0.50, est: "5-8 min", desc: "Fill out a short online survey honestly." },
-    { id: 4, title: "Install & review an app", reward: 0.25, est: "3-6 min", desc: "Install an app and write a quick review." }
+    { id: 1, title: "Watch a short video", reward: 0.10, est: "1-2 min", instructions: "Watch this video fully and submit a screenshot." },
+    { id: 2, title: "Share a post", reward: 0.20, est: "2-3 min", instructions: "Share our post on social media and submit proof." },
+    { id: 3, title: "Answer a survey", reward: 0.50, est: "5-8 min", instructions: "Complete the survey and submit confirmation." },
+    { id: 4, title: "Install & review an app", reward: 0.25, est: "3-6 min", instructions: "Install the app, review it, and submit screenshot." }
   ];
 
   const tiers = [
@@ -56,7 +57,6 @@ export default function App() {
                 </div>
                 <span className="text-[#D4AF37] font-bold text-lg hidden sm:inline-block">SkillMatch</span>
               </a>
-
               <ul className="hidden lg:flex items-center gap-6 text-sm text-gray-200">
                 <li><a href="#home" className="hover:underline">Home</a></li>
                 <li><a href="#jobs" className="hover:underline">Jobs</a></li>
@@ -65,7 +65,6 @@ export default function App() {
                 <li><a href="#pricing" onClick={(e)=>{ e.preventDefault(); setShowPricing(true); }} className="hover:underline">Pricing</a></li>
               </ul>
             </div>
-
             <div className="flex items-center gap-3">
               <button onClick={() => setShowPricing(true)} className="hidden sm:inline-block px-3 py-2 rounded-md bg-[#102A7A] hover:bg-[#0D1F62]">Plans</button>
               <a href="#login" className="px-3 py-2 rounded-md border border-white/10 hover:border-[#D4AF37] text-sm">Login</a>
@@ -80,26 +79,19 @@ export default function App() {
         <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-gradient-to-br from-[#061026] via-[#071634] to-[#031226]" />
-            <div
-              aria-hidden
-              className="absolute inset-0 opacity-40"
-              style={{
-                background: `linear-gradient(120deg, rgba(212,175,55,0.06) 0%, rgba(255,255,255,0.02) 25%, rgba(212,175,55,0.10) 50%, rgba(255,255,255,0.02) 75%, rgba(212,175,55,0.06) 100%)`,
-                backgroundSize: "1000px 1000px",
-                animation: "shimmer-diag 7s linear infinite"
-              }}
-            />
+            <div aria-hidden className="absolute inset-0 opacity-40" style={{
+              background: `linear-gradient(120deg, rgba(212,175,55,0.06) 0%, rgba(255,255,255,0.02) 25%, rgba(212,175,55,0.10) 50%, rgba(255,255,255,0.02) 75%, rgba(212,175,55,0.06) 100%)`,
+              backgroundSize: "1000px 1000px",
+              animation: "shimmer-diag 7s linear infinite"
+            }} />
           </div>
-
           <div className="max-w-6xl mx-auto px-6 text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <div className="mx-auto w-full h-auto mb-6 flex justify-center">
                 <img src={Logo} alt="SkillMatch logo" className="w-64 md:w-80 object-contain drop-shadow-lg" />
               </div>
-
               <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">Find Real Jobs & Micro Tasks That Pay Instantly</h1>
               <p className="text-gray-300 max-w-2xl mx-auto mb-8">Join the global marketplace where opportunities meet skill — employers pay upfront, SkillMatch secures payouts, and workers earn real money.</p>
-
               <div className="flex items-center justify-center gap-4 flex-wrap">
                 <a href="#jobs" className="px-6 py-3 rounded-lg bg-[#0F4BE5] font-semibold hover:shadow-lg">Explore Jobs</a>
                 <a href="#tasks" className="px-6 py-3 rounded-lg bg-[#D4AF37] text-black font-semibold hover:shadow-lg">Start Earning</a>
@@ -109,7 +101,23 @@ export default function App() {
           </div>
         </section>
 
-        {/* JOBS + TASKS */}
+        {/* QUICK STATS */}
+        <section className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white/4 border border-white/6 rounded-lg p-6 text-center">
+            <div className="text-3xl font-bold text-[#D4AF37]">10,000+</div>
+            <div className="text-sm text-gray-300 mt-2">Jobs Listed</div>
+          </div>
+          <div className="bg-white/4 border border-white/6 rounded-lg p-6 text-center">
+            <div className="text-3xl font-bold text-[#D4AF37]">50,000+</div>
+            <div className="text-sm text-gray-300 mt-2">Tasks Completed</div>
+          </div>
+          <div className="bg-white/4 border border-white/6 rounded-lg p-6 text-center">
+            <div className="text-3xl font-bold text-[#D4AF37]">$100,000+</div>
+            <div className="text-sm text-gray-300 mt-2">Paid to Workers</div>
+          </div>
+        </section>
+
+        {/* JOBS & TASKS MARKETPLACE */}
         <section id="jobs" className="max-w-7xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Jobs */}
           <div>
@@ -121,12 +129,11 @@ export default function App() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {fakeJobs.map(j => (
-                  <div key={j.id} className="p-6 rounded-xl bg-white/5 border border-white/6 cursor-pointer hover:bg-white/10"
+                  <div key={j.id} className="p-6 rounded-xl bg-white/5 border border-white/6 cursor-pointer hover:shadow-lg"
                     onClick={() => { setSelectedJob(j); setShowApply(true); }}>
                     <h3 className="font-semibold text-lg">{j.title}</h3>
                     <p className="text-sm text-gray-300">{j.company} • {j.type}</p>
                     <p className="text-sm text-gray-300 mt-2">{j.salary}</p>
-                    <p className="text-sm text-gray-400 mt-1">{j.desc}</p>
                   </div>
                 ))}
               </div>
@@ -143,20 +150,23 @@ export default function App() {
             ) : (
               <div className="grid grid-cols-1 gap-4">
                 {fakeTasks.map(t => (
-                  <div key={t.id} className="p-4 rounded-xl bg-white/5 border border-white/6 cursor-pointer hover:bg-white/10"
-                    onClick={() => { setSelectedTask(t); setShowApply(true); }}>
+                  <div key={t.id} className="p-4 rounded-xl bg-white/5 border border-white/6 cursor-pointer hover:shadow-lg"
+                    onClick={() => { setSelectedTask(t); setShowTask(true); }}>
                     <div>
                       <h4 className="font-medium">{t.title}</h4>
                       <p className="text-sm text-gray-300">Est: {t.est}</p>
-                      <p className="text-sm text-gray-400 mt-1">{t.desc}</p>
                     </div>
-                    <div className="flex items-center gap-3 mt-2">
+                    <div className="flex items-center gap-3">
                       <div className="text-sm font-semibold text-[#D4AF37]">${t.reward.toFixed(2)}</div>
+                      <button onClick={() => { setSelectedTask(t); setShowTask(true); }} className="px-3 py-2 rounded bg-[#0F4BE5]">Start</button>
                     </div>
                   </div>
                 ))}
               </div>
             )}
+            <div className="mt-6 text-sm text-gray-300">
+              Free users: up to <strong>100 tasks</strong> and <strong>1 withdrawal</strong>. Upgrade for unlimited tasks & faster payouts.
+            </div>
           </div>
         </section>
 
@@ -177,7 +187,7 @@ export default function App() {
             <div className="p-6 rounded-xl bg-white/5 text-center">
               <div className="text-3xl font-bold text-[#D4AF37] mb-2">3</div>
               <div className="font-semibold">Get Paid</div>
-              <div className="text-sm text-gray-300 mt-2">Withdraw to SkillMatch Wallet (Kairah Pay) — mock at launch.</div>
+              <div className="text-sm text-gray-300 mt-2">Withdraw via Stripe, PayPal, M-Pesa, or Bank Transfer.</div>
             </div>
           </div>
         </section>
@@ -208,7 +218,6 @@ export default function App() {
               <h4 className="text-xl font-semibold">Pricing & Plans</h4>
               <button onClick={()=>setShowPricing(false)} className="px-2 py-1">Close</button>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {tiers.map(t => (
                 <div key={t.id} className="p-4 rounded-lg bg-white/3 border border-white/6">
@@ -217,17 +226,15 @@ export default function App() {
                   <ul className="text-sm mb-3 space-y-1">
                     {t.features.map((f,i) => <li key={i}>• {f}</li>)}
                   </ul>
-                  <div className="flex items-center gap-2">
-                    <button className="px-3 py-2 rounded bg-[#0F4BE5]">Subscribe</button>
-                    <button className="px-2 py-1 text-sm border border-white/10">PayPal</button>
-                    <button className="px-2 py-1 text-sm border border-white/10">Stripe</button>
+                  <div className="flex flex-col gap-2">
+                    <button className="px-3 py-2 rounded bg-[#0F4BE5]">Subscribe via Stripe</button>
+                    <button className="px-3 py-2 rounded bg-[#0F4BE5]">PayPal: eunicemueni103@gmail.com</button>
+                    <button className="px-3 py-2 rounded bg-[#0F4BE5]">M-Pesa: 0113554446</button>
+                    <button className="px-3 py-2 rounded bg-[#0F4BE5]">Absa Bank: 2043681098</button>
                   </div>
-                  <div className="mt-2 text-xs text-gray-400">(Payment integrations coming soon)</div>
                 </div>
               ))}
             </div>
-
-            <div className="mt-4 text-sm text-gray-400">Employers pay upfront for tasks. SkillMatch holds funds and disburses to workers. Employer dashboard coming soon.</div>
           </div>
         </div>
       )}
@@ -237,51 +244,52 @@ export default function App() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="max-w-2xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold">For Employers</h4>
+              <h4 className="text-xl font-semibold">Post a Job</h4>
               <button onClick={()=>setShowEmployer(false)} className="px-2 py-1">Close</button>
             </div>
-
-            <div className="text-gray-300">
-              <p className="mb-3">Post tasks or remote jobs and pay upfront. SkillMatch will hold funds securely and distribute payouts to workers once tasks are verified.</p>
-              <p className="mb-3">Post a Task (Coming Soon) — set task count, reward per task, and target criteria. Employers do not see how workers are paid; payout distribution is managed by the platform admin.</p>
-
-              <div className="mt-4 flex gap-3">
-                <button className="px-4 py-2 rounded bg-[#D4AF37] text-black">Post a Task (Coming Soon)</button>
-                <button className="px-4 py-2 rounded border border-white/10" onClick={()=>setShowEmployer(false)}>Close</button>
-              </div>
+            <div className="space-y-3">
+              <input type="text" placeholder="Job Title" className="w-full p-2 rounded bg-white/5 border border-white/10"/>
+              <textarea placeholder="Description" className="w-full p-2 rounded bg-white/5 border border-white/10"/>
+              <input type="text" placeholder="Company Name" className="w-full p-2 rounded bg-white/5 border border-white/10"/>
+              <input type="text" placeholder="Salary / Payment" className="w-full p-2 rounded bg-white/5 border border-white/10"/>
+              <button className="px-4 py-2 rounded bg-[#D4AF37] w-full">Submit Job</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* APPLY MODAL */}
-      {(showApply && (selectedJob || selectedTask)) && (
+      {/* JOB APPLY MODAL */}
+      {showApply && selectedJob && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="max-w-xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold">{selectedJob ? `Apply to ${selectedJob.title}` : `Start Task: ${selectedTask.title}`}</h4>
-              <button onClick={()=>{ setShowApply(false); setSelectedJob(null); setSelectedTask(null); }} className="px-2 py-1">Close</button>
+              <h4 className="text-xl font-semibold">{selectedJob.title}</h4>
+              <button onClick={()=>setShowApply(false)} className="px-2 py-1">Close</button>
             </div>
+            <p className="text-gray-300 mb-3">{selectedJob.description}</p>
+            <p className="text-sm text-gray-400 mb-1">Company: {selectedJob.company}</p>
+            <p className="text-sm text-gray-400 mb-1">Type: {selectedJob.type}</p>
+            <p className="text-sm text-gray-400 mb-3">Salary: {selectedJob.salary}</p>
+            <button className="px-4 py-2 rounded bg-[#D4AF37] w-full">Apply Now</button>
+          </div>
+        </div>
+      )}
 
-            {selectedJob && (
-              <div className="text-gray-300 space-y-2">
-                <p><strong>Company:</strong> {selectedJob.company}</p>
-                <p><strong>Type:</strong> {selectedJob.type}</p>
-                <p><strong>Salary:</strong> {selectedJob.salary}</p>
-                <p><strong>Description:</strong> {selectedJob.desc}</p>
-                <input type="email" placeholder="Enter your email" className="w-full mt-3 p-2 rounded bg-[#0F1A2D] border border-white/10 text-gray-100" />
-                <button className="mt-3 w-full py-2 rounded bg-[#D4AF37] text-black font-semibold">Apply Now</button>
-              </div>
-            )}
-
-            {selectedTask && (
-              <div className="text-gray-300 space-y-2">
-                <p><strong>Est. Time:</strong> {selectedTask.est}</p>
-                <p><strong>Reward:</strong> ${selectedTask.reward.toFixed(2)}</p>
-                <p><strong>Description:</strong> {selectedTask.desc}</p>
-                <button className="mt-3 w-full py-2 rounded bg-[#D4AF37] text-black font-semibold">Start Task</button>
-              </div>
-            )}
+      {/* TASK MODAL */}
+      {showTask && selectedTask && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="max-w-xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-xl font-semibold">{selectedTask.title}</h4>
+              <button onClick={()=>setShowTask(false)} className="px-2 py-1">Close</button>
+            </div>
+            <p className="text-gray-300 mb-3">{selectedTask.instructions}</p>
+            <p className="text-sm text-gray-400 mb-3">Reward: ${selectedTask.reward.toFixed(2)}</p>
+            <div className="flex flex-col gap-2">
+              <button className="px-3 py-2 rounded bg-[#0F4BE5]">Start Task</button>
+              <button className="px-3 py-2 rounded bg-[#D4AF37]">Submit Proof</button>
+              <button className="px-3 py-2 rounded bg-[#0F4BE5]">Confirm Payment</button>
+            </div>
           </div>
         </div>
       )}
