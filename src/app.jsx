@@ -1,7 +1,7 @@
 // frontend/src/App.jsx
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Logo from "./assets/skillmatch-logo.png"; // Make sure this exists
+import Logo from "./assets/skillmatch-logo.png"; // Make sure your final logo is here
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -36,9 +36,12 @@ export default function App() {
     { id: "diamond", name: "Diamond", price: "$29/mo", features: ["AI-matched gigs", "Instant payouts", "Priority support"] }
   ];
 
+  const openJob = (job) => { setSelectedJob(job); setShowApply(true); };
+  const openTask = (task) => { setSelectedTask(task); setShowApply(true); };
+
   return (
     <div className="min-h-screen bg-[#0B0E15] text-gray-100 antialiased">
-      {/* Shimmer keyframes */}
+      {/* Shimmer diagonal */}
       <style>{`
         @keyframes shimmer-diag {
           0% { background-position: -600px -600px; }
@@ -126,7 +129,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* JOBS + TASKS MARKETPLACE */}
+        {/* JOBS & TASKS */}
         <section id="jobs" className="max-w-7xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Jobs */}
           <div>
@@ -140,8 +143,8 @@ export default function App() {
                 {fakeJobs.map(j => (
                   <div
                     key={j.id}
+                    onClick={() => openJob(j)}
                     className="p-6 rounded-xl bg-white/5 border border-white/6 cursor-pointer hover:bg-white/10 transition"
-                    onClick={() => { setSelectedJob(j); setShowApply(true); }}
                   >
                     <h3 className="font-semibold text-lg">{j.title}</h3>
                     <p className="text-sm text-gray-300">{j.company} • {j.type}</p>
@@ -164,8 +167,8 @@ export default function App() {
                 {fakeTasks.map(t => (
                   <div
                     key={t.id}
+                    onClick={() => openTask(t)}
                     className="p-4 rounded-xl bg-white/5 border border-white/6 flex items-center justify-between cursor-pointer hover:bg-white/10 transition"
-                    onClick={() => setSelectedTask(t)}
                   >
                     <div>
                       <h4 className="font-medium">{t.title}</h4>
@@ -176,6 +179,9 @@ export default function App() {
                 ))}
               </div>
             )}
+            <div className="mt-6 text-sm text-gray-300">
+              Free users: up to <strong>100 tasks</strong> and <strong>1 withdrawal</strong>. Upgrade for unlimited tasks & faster payouts.
+            </div>
           </div>
         </section>
 
@@ -232,7 +238,9 @@ export default function App() {
                 <div key={t.id} className="p-4 rounded-lg bg-white/3 border border-white/6">
                   <div className="text-lg font-bold mb-2">{t.name}</div>
                   <div className="text-sm mb-3">{t.price}</div>
-                  <ul className="text-sm mb-3 space-y-1">{t.features.map((f,i)=><li key={i}>• {f}</li>)}</ul>
+                  <ul className="text-sm mb-3 space-y-1">
+                    {t.features.map((f,i) => <li key={i}>• {f}</li>)}
+                  </ul>
                   <div className="flex items-center gap-2">
                     <button className="px-3 py-2 rounded bg-[#0F4BE5]">Subscribe</button>
                     <button className="px-2 py-1 text-sm border border-white/10">PayPal</button>
@@ -242,7 +250,6 @@ export default function App() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 text-sm text-gray-400">Employers pay upfront for tasks. SkillMatch holds funds and disburses to workers. Employer dashboard coming soon.</div>
           </div>
         </div>
       )}
@@ -257,53 +264,36 @@ export default function App() {
             </div>
             <div className="text-gray-300">
               <p className="mb-3">Post tasks or remote jobs and pay upfront. SkillMatch will hold funds securely and distribute payouts to workers once tasks are verified.</p>
-              <p className="mb-3">Post a Task (Coming Soon) — set task count, reward per task, and target criteria. Employers do not see how workers are paid; payout distribution is managed by the platform admin.</p>
-              <div className="mt-4 flex gap-3">
-                <button className="px-4 py-2 rounded bg-[#D4AF37] text-black">Post a Task (Coming Soon)</button>
-                <button className="px-4 py-2 rounded border border-white/10" onClick={()=>setShowEmployer(false)}>Close</button>
-              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* APPLY MODAL */}
-      {showApply && selectedJob && (
+      {/* APPLY MODAL (for Jobs or Tasks) */}
+      {showApply && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="max-w-xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold">Apply for {selectedJob.title}</h4>
+              <h4 className="text-lg font-semibold">{selectedJob ? `Apply to ${selectedJob.title}` : `Start Task: ${selectedTask.title}`}</h4>
               <button onClick={()=>setShowApply(false)} className="px-2 py-1">Close</button>
             </div>
-            <div className="text-gray-300">
-              <p className="mb-3">Company: {selectedJob.company}</p>
-              <p className="mb-3">Type: {selectedJob.type}</p>
-              <p className="mb-3">Salary: {selectedJob.salary}</p>
-              <p className="mb-3">Application process is a mock for now. Click “Apply” to simulate applying.</p>
-              <button className="px-4 py-2 rounded bg-[#D4AF37] text-black">Apply</button>
+            <div className="text-gray-300 space-y-2">
+              {selectedJob && <>
+                <p><strong>Company:</strong> {selectedJob.company}</p>
+                <p><strong>Type:</strong> {selectedJob.type}</p>
+                <p><strong>Salary:</strong> {selectedJob.salary}</p>
+              </>}
+              {selectedTask && <>
+                <p><strong>Reward:</strong> ${selectedTask.reward.toFixed(2)}</p>
+                <p><strong>Estimated time:</strong> {selectedTask.est}</p>
+              </>}
+              <button className="mt-4 px-6 py-2 rounded bg-[#D4AF37] text-black font-semibold">
+                {selectedJob ? "Mock Apply" : "Start Task"}
+              </button>
             </div>
           </div>
         </div>
       )}
-
-      {/* TASK START MODAL */}
-      {selectedTask && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="max-w-md w-full bg-[#071124] rounded-xl p-6 border border-white/6">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold">Start Task</h4>
-              <button onClick={()=>setSelectedTask(null)} className="px-2 py-1">Close</button>
-            </div>
-            <div className="text-gray-300">
-              <p className="mb-3 font-medium">{selectedTask.title}</p>
-              <p className="mb-3">Estimated Time: {selectedTask.est}</p>
-              <p className="mb-3">Reward: ${selectedTask.reward.toFixed(2)}</p>
-              <button className="px-4 py-2 rounded bg-[#0F4BE5]">Start Task (Mock)</button>
-            </div>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }
