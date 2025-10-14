@@ -1,9 +1,8 @@
 // frontend/src/App.jsx
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Logo from "./assets/skillmatch-logo.png";
+import Logo from "./assets/skillmatch-logo.png"; // Make sure this exists
 
-// SkillMatch v1.0 - App.jsx
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [showPricing, setShowPricing] = useState(false);
@@ -39,6 +38,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0B0E15] text-gray-100 antialiased">
+      {/* Shimmer keyframes */}
       <style>{`
         @keyframes shimmer-diag {
           0% { background-position: -600px -600px; }
@@ -126,12 +126,11 @@ export default function App() {
           </div>
         </section>
 
-        {/* JOBS & TASKS MARKETPLACE */}
-        <section className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-10">
-
+        {/* JOBS + TASKS MARKETPLACE */}
+        <section id="jobs" className="max-w-7xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Jobs */}
-          <div id="jobs">
-            <h2 className="text-2xl font-semibold text-white mb-6">🎯 Remote Jobs</h2>
+          <div>
+            <h2 className="text-2xl font-semibold text-white mb-4">🎯 Remote Jobs</h2>
             {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[...Array(4)].map((_, i) => <div key={i} className="p-6 rounded-xl bg-white/5 animate-pulse h-32" />)}
@@ -139,18 +138,14 @@ export default function App() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {fakeJobs.map(j => (
-                  <div 
-                    key={j.id} 
-                    className="p-6 rounded-xl bg-white/5 border border-white/6 cursor-pointer hover:bg-white/10 transition" 
+                  <div
+                    key={j.id}
+                    className="p-6 rounded-xl bg-white/5 border border-white/6 cursor-pointer hover:bg-white/10 transition"
                     onClick={() => { setSelectedJob(j); setShowApply(true); }}
                   >
                     <h3 className="font-semibold text-lg">{j.title}</h3>
                     <p className="text-sm text-gray-300">{j.company} • {j.type}</p>
                     <p className="text-sm text-gray-300 mt-2">{j.salary}</p>
-                    <div className="mt-4 flex items-center gap-3">
-                      <button className="px-3 py-2 rounded bg-[#0F4BE5]">Apply Now</button>
-                      <button className="px-3 py-2 rounded border border-white/10">Save</button>
-                    </div>
                   </div>
                 ))}
               </div>
@@ -159,7 +154,7 @@ export default function App() {
 
           {/* Tasks */}
           <div id="tasks">
-            <h2 className="text-2xl font-semibold text-white mb-6">🪙 Micro Tasks Marketplace</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">🪙 Micro Tasks Marketplace</h2>
             {loading ? (
               <div className="grid grid-cols-1 gap-4">
                 {[...Array(4)].map((_, i) => <div key={i} className="p-6 rounded-xl bg-white/5 animate-pulse h-24" />)}
@@ -167,31 +162,20 @@ export default function App() {
             ) : (
               <div className="grid grid-cols-1 gap-4">
                 {fakeTasks.map(t => (
-                  <div 
-                    key={t.id} 
+                  <div
+                    key={t.id}
                     className="p-4 rounded-xl bg-white/5 border border-white/6 flex items-center justify-between cursor-pointer hover:bg-white/10 transition"
-                    onClick={() => { setSelectedTask(t); setShowPricing(true); }}
+                    onClick={() => setSelectedTask(t)}
                   >
                     <div>
                       <h4 className="font-medium">{t.title}</h4>
                       <p className="text-sm text-gray-300">Est: {t.est}</p>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="text-sm font-semibold text-[#D4AF37]">${t.reward.toFixed(2)}</div>
-                      <button className="px-3 py-2 rounded bg-[#0F4BE5]">Start</button>
-                    </div>
+                    <div className="text-sm font-semibold text-[#D4AF37]">${t.reward.toFixed(2)}</div>
                   </div>
                 ))}
               </div>
             )}
-
-            <div className="mt-6 text-sm text-gray-300">
-              Free users: up to <strong>100 tasks</strong> and <strong>1 withdrawal</strong>. Upgrade for unlimited tasks & faster payouts.
-            </div>
-
-            <div className="mt-6">
-              <button onClick={() => setShowEmployer(true)} className="px-4 py-2 rounded border border-white/10">For Employers</button>
-            </div>
           </div>
         </section>
 
@@ -235,7 +219,7 @@ export default function App() {
         </footer>
       </main>
 
-      {/* MODALS (Pricing, Employer, Apply) */}
+      {/* PRICING MODAL */}
       {showPricing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="max-w-3xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
@@ -243,15 +227,12 @@ export default function App() {
               <h4 className="text-xl font-semibold">Pricing & Plans</h4>
               <button onClick={()=>setShowPricing(false)} className="px-2 py-1">Close</button>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {tiers.map(t => (
                 <div key={t.id} className="p-4 rounded-lg bg-white/3 border border-white/6">
                   <div className="text-lg font-bold mb-2">{t.name}</div>
                   <div className="text-sm mb-3">{t.price}</div>
-                  <ul className="text-sm mb-3 space-y-1">
-                    {t.features.map((f,i) => <li key={i}>• {f}</li>)}
-                  </ul>
+                  <ul className="text-sm mb-3 space-y-1">{t.features.map((f,i)=><li key={i}>• {f}</li>)}</ul>
                   <div className="flex items-center gap-2">
                     <button className="px-3 py-2 rounded bg-[#0F4BE5]">Subscribe</button>
                     <button className="px-2 py-1 text-sm border border-white/10">PayPal</button>
@@ -261,12 +242,12 @@ export default function App() {
                 </div>
               ))}
             </div>
-
             <div className="mt-4 text-sm text-gray-400">Employers pay upfront for tasks. SkillMatch holds funds and disburses to workers. Employer dashboard coming soon.</div>
           </div>
         </div>
       )}
 
+      {/* EMPLOYER MODAL */}
       {showEmployer && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="max-w-2xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
@@ -276,31 +257,53 @@ export default function App() {
             </div>
             <div className="text-gray-300">
               <p className="mb-3">Post tasks or remote jobs and pay upfront. SkillMatch will hold funds securely and distribute payouts to workers once tasks are verified.</p>
-              <p>Employer dashboard coming soon.</p>
+              <p className="mb-3">Post a Task (Coming Soon) — set task count, reward per task, and target criteria. Employers do not see how workers are paid; payout distribution is managed by the platform admin.</p>
+              <div className="mt-4 flex gap-3">
+                <button className="px-4 py-2 rounded bg-[#D4AF37] text-black">Post a Task (Coming Soon)</button>
+                <button className="px-4 py-2 rounded border border-white/10" onClick={()=>setShowEmployer(false)}>Close</button>
+              </div>
             </div>
           </div>
         </div>
       )}
 
+      {/* APPLY MODAL */}
       {showApply && selectedJob && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="max-w-md w-full bg-[#071124] rounded-xl p-6 border border-white/6">
+          <div className="max-w-xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-lg font-semibold">Apply for {selectedJob.title}</h4>
               <button onClick={()=>setShowApply(false)} className="px-2 py-1">Close</button>
             </div>
             <div className="text-gray-300">
-              <p className="mb-3">This is a mock apply flow. Users can submit their resume and details here.</p>
-              <form className="space-y-3">
-                <input type="text" placeholder="Full Name" className="w-full p-2 rounded bg-white/5 border border-white/10" />
-                <input type="email" placeholder="Email Address" className="w-full p-2 rounded bg-white/5 border border-white/10" />
-                <textarea placeholder="Cover Letter" className="w-full p-2 rounded bg-white/5 border border-white/10"></textarea>
-                <button type="submit" className="px-4 py-2 rounded bg-[#0F4BE5]">Submit Application</button>
-              </form>
+              <p className="mb-3">Company: {selectedJob.company}</p>
+              <p className="mb-3">Type: {selectedJob.type}</p>
+              <p className="mb-3">Salary: {selectedJob.salary}</p>
+              <p className="mb-3">Application process is a mock for now. Click “Apply” to simulate applying.</p>
+              <button className="px-4 py-2 rounded bg-[#D4AF37] text-black">Apply</button>
             </div>
           </div>
         </div>
       )}
+
+      {/* TASK START MODAL */}
+      {selectedTask && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="max-w-md w-full bg-[#071124] rounded-xl p-6 border border-white/6">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-lg font-semibold">Start Task</h4>
+              <button onClick={()=>setSelectedTask(null)} className="px-2 py-1">Close</button>
+            </div>
+            <div className="text-gray-300">
+              <p className="mb-3 font-medium">{selectedTask.title}</p>
+              <p className="mb-3">Estimated Time: {selectedTask.est}</p>
+              <p className="mb-3">Reward: ${selectedTask.reward.toFixed(2)}</p>
+              <button className="px-4 py-2 rounded bg-[#0F4BE5]">Start Task (Mock)</button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
