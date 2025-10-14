@@ -1,8 +1,7 @@
 {
-  "name": "skillmatch-frontend",
+  "name": "skillmatch",
   "version": "1.0.0",
   "private": true,
-  "description": "SkillMatch v1.0 - React + TailwindCSS frontend",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -13,12 +12,12 @@
     "framer-motion": "^10.12.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
-    "tailwindcss": "^3.3.3",
     "autoprefixer": "^10.4.15",
-    "postcss": "^8.4.27"
+    "postcss": "^8.4.26"
   },
   "browserslist": {
     "production": [
