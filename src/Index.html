@@ -1,54 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skillmatch</title>
-  <!-- Axios CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <!-- React & ReactDOM CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background:#f0f4f8; }
+    header { background:#004466; color:white; padding:20px; text-align:center; }
+    main { padding:20px; text-align:center; }
+    .banner { background:#FFD700; padding:10px; margin:10px 0; font-weight:bold; }
+    button { padding:10px 20px; margin-top:10px; cursor:pointer; background:#004466; color:white; border:none; border-radius:5px; }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
-
-  <script type="text/javascript">
-    const { useState } = React;
-
-    function App() {
-      const [input, setInput] = useState('');
-      const [response, setResponse] = useState('');
-
-      const handleSubmit = async () => {
-        if (!input) return;
-        try {
-          // Example API call; replace with your real Skillmatch API
-          const res = await axios.get(`https://jsonplaceholder.typicode.com/todos/${input}`);
-          setResponse(JSON.stringify(res.data, null, 2));
-        } catch (err) {
-          setResponse('Error fetching data');
-        }
-      };
-
-      return React.createElement(
-        'div',
-        { style: { textAlign: 'center', marginTop: '50px' } },
-        React.createElement('h1', null, 'Skillmatch Frontend Restored'),
-        React.createElement('input', {
-          type: 'text',
-          value: input,
-          placeholder: 'Enter ID',
-          onChange: e => setInput(e.target.value),
-          style: { padding: '8px', width: '200px', marginRight: '10px' }
-        }),
-        React.createElement('button', { onClick: handleSubmit, style: { padding: '8px 16px' } }, 'Fetch'),
-        React.createElement('pre', { style: { marginTop: '20px', textAlign: 'left', display: 'inline-block' } }, response)
-      );
-    }
-
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(React.createElement(App));
-  </script>
+  <header>
+    <h1>Skillmatch</h1>
+  </header>
+  <main>
+    <div class="banner">Payments & full features coming soon! Enjoy the demo.</div>
+    <p>Welcome to Skillmatch. Try our demo features below.</p>
+    <button onclick="alert('Demo video generated!')">Generate Demo Video</button>
+  </main>
 </body>
 </html>
