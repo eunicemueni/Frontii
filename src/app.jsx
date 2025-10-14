@@ -3,12 +3,6 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Logo from "./assets/skillmatch-logo.png"; // place your black-gold logo here
 
-// SkillMatch v1.0 - App.jsx
-// - React + TailwindCSS + Framer Motion
-// - Hero with diagonal shimmer, large logo, Jobs & Tasks, Pricing & Employer modals
-// - Mock data + skeleton loaders
-// - Put Logo at src/assets/skillmatch-logo.png
-
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [showPricing, setShowPricing] = useState(false);
@@ -17,7 +11,6 @@ export default function App() {
   const [selectedJob, setSelectedJob] = useState(null);
 
   useEffect(() => {
-    // simulate shimmer loading
     const t = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(t);
   }, []);
@@ -41,6 +34,11 @@ export default function App() {
     { id: "pro", name: "Pro", price: "$9/mo", features: ["Unlimited tasks", "Unlimited withdrawals", "Apply to jobs"] },
     { id: "diamond", name: "Diamond", price: "$29/mo", features: ["AI-matched gigs", "Instant payouts", "Priority support"] }
   ];
+
+  // close modals on overlay click
+  const closeModal = (setter) => (e) => {
+    if (e.target === e.currentTarget) setter(false);
+  };
 
   return (
     <div className="min-h-screen bg-[#0B0E15] text-gray-100 antialiased">
@@ -74,7 +72,7 @@ export default function App() {
             </div>
 
             <div className="flex items-center gap-3">
-              <button onClick={() => setShowPricing(true)} className="hidden sm:inline-block px-3 py-2 rounded-md bg-[#102A7A] hover:bg-[#0D1F62]">Plans</button>
+              <button type="button" onClick={() => setShowPricing(true)} className="hidden sm:inline-block px-3 py-2 rounded-md bg-[#102A7A] hover:bg-[#0D1F62]">Plans</button>
               <a href="#login" className="px-3 py-2 rounded-md border border-white/10 hover:border-[#D4AF37] text-sm">Login</a>
               <a href="#signup" className="px-3 py-2 rounded-md bg-[#D4AF37] text-black font-semibold text-sm">Signup</a>
             </div>
@@ -85,7 +83,6 @@ export default function App() {
       {/* HERO */}
       <main className="pt-24">
         <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-          {/* background layers */}
           <div className="absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-gradient-to-br from-[#061026] via-[#071634] to-[#031226]" />
             <div
@@ -111,7 +108,7 @@ export default function App() {
               <div className="flex items-center justify-center gap-4 flex-wrap">
                 <a href="#jobs" className="px-6 py-3 rounded-lg bg-[#0F4BE5] font-semibold hover:shadow-lg">Explore Jobs</a>
                 <a href="#tasks" className="px-6 py-3 rounded-lg bg-[#D4AF37] text-black font-semibold hover:shadow-lg">Start Earning</a>
-                <button onClick={() => setShowEmployer(true)} className="px-4 py-3 rounded-lg border border-white/10">Hire Skilled Workers</button>
+                <button type="button" onClick={() => setShowEmployer(true)} className="px-4 py-3 rounded-lg border border-white/10">Hire Skilled Workers</button>
               </div>
             </motion.div>
           </div>
@@ -150,8 +147,8 @@ export default function App() {
                     <p className="text-sm text-gray-300">{j.company} • {j.type}</p>
                     <p className="text-sm text-gray-300 mt-2">{j.salary}</p>
                     <div className="mt-4 flex items-center gap-3">
-                      <button onClick={() => { setSelectedJob(j); setShowApply(true); }} className="px-3 py-2 rounded bg-[#0F4BE5]">Apply Now</button>
-                      <button className="px-3 py-2 rounded border border-white/10">Save</button>
+                      <button type="button" onClick={() => { setSelectedJob(j); setShowApply(true); }} className="px-3 py-2 rounded bg-[#0F4BE5]">Apply Now</button>
+                      <button type="button" className="px-3 py-2 rounded border border-white/10">Save</button>
                     </div>
                   </div>
                 ))}
@@ -176,7 +173,7 @@ export default function App() {
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="text-sm font-semibold text-[#D4AF37]">${t.reward.toFixed(2)}</div>
-                      <button onClick={() => setShowPricing(true)} className="px-3 py-2 rounded bg-[#0F4BE5]">Start</button>
+                      <button type="button" onClick={() => setShowPricing(true)} className="px-3 py-2 rounded bg-[#0F4BE5]">Start</button>
                     </div>
                   </div>
                 ))}
@@ -188,7 +185,7 @@ export default function App() {
             </div>
 
             <div className="mt-6">
-              <button onClick={() => setShowEmployer(true)} className="px-4 py-2 rounded border border-white/10">For Employers</button>
+              <button type="button" onClick={() => setShowEmployer(true)} className="px-4 py-2 rounded border border-white/10">For Employers</button>
             </div>
           </div>
         </section>
@@ -222,7 +219,7 @@ export default function App() {
             <p className="text-gray-300 mb-4">Sign up free and start earning today — the marketplace is live.</p>
             <div className="flex items-center justify-center gap-4">
               <a href="#signup" className="px-6 py-3 rounded bg-[#D4AF37] text-black font-semibold">Join SkillMatch Now</a>
-              <button onClick={() => setShowPricing(true)} className="px-6 py-3 rounded border border-white/10">See Pricing</button>
+              <button type="button" onClick={() => setShowPricing(true)} className="px-6 py-3 rounded border border-white/10">See Pricing</button>
             </div>
           </div>
         </section>
@@ -233,13 +230,13 @@ export default function App() {
         </footer>
       </main>
 
-      {/* PRICING MODAL (mock) */}
+      {/* PRICING MODAL */}
       {showPricing && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={closeModal(setShowPricing)}>
           <div className="max-w-3xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-xl font-semibold">Pricing & Plans</h4>
-              <button onClick={()=>setShowPricing(false)} className="px-2 py-1">Close</button>
+              <button type="button" onClick={()=>setShowPricing(false)} className="px-2 py-1">Close</button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -251,9 +248,9 @@ export default function App() {
                     {t.features.map((f,i) => <li key={i}>• {f}</li>)}
                   </ul>
                   <div className="flex items-center gap-2">
-                    <button className="px-3 py-2 rounded bg-[#0F4BE5]">Subscribe</button>
-                    <button className="px-2 py-1 text-sm border border-white/10">PayPal</button>
-                    <button className="px-2 py-1 text-sm border border-white/10">Stripe</button>
+                    <button type="button" className="px-3 py-2 rounded bg-[#0F4BE5]">Subscribe</button>
+                    <button type="button" className="px-2 py-1 text-sm border border-white/10">PayPal</button>
+                    <button type="button" className="px-2 py-1 text-sm border border-white/10">Stripe</button>
                   </div>
                   <div className="mt-2 text-xs text-gray-400">(Payment integrations coming soon)</div>
                 </div>
@@ -267,48 +264,7 @@ export default function App() {
 
       {/* EMPLOYER MODAL */}
       {showEmployer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={closeModal(setShowEmployer)}>
           <div className="max-w-2xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold">For Employers</h4>
-              <button onClick={()=>setShowEmployer(false)} className="px-2 py-1">Close</button>
-            </div>
-
-            <div className="text-gray-300">
-              <p className="mb-3">Post tasks or remote jobs and pay upfront. SkillMatch will hold funds securely and distribute payouts to workers once tasks are verified.</p>
-              <p className="mb-3">Post a Task (Coming Soon) — set task count, reward per task, and target criteria. Employers do not see how workers are paid; payout distribution is managed by the platform admin.</p>
-
-              <div className="mt-4 flex gap-3">
-                <button className="px-4 py-2 rounded bg-[#D4AF37] text-black">Post a Task (Coming Soon)</button>
-                <button className="px-4 py-2 rounded border border-white/10" onClick={()=>setShowEmployer(false)}>Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* APPLY MODAL (mock) */}
-      {showApply && selectedJob && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="max-w-xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold">Apply to {selectedJob.title}</h4>
-              <button onClick={()=>{ setShowApply(false); setSelectedJob(null); }} className="px-2 py-1">Close</button>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3">
-              <input className="p-3 rounded bg-black/40 border border-white/6" placeholder="Full name" />
-              <input className="p-3 rounded bg-black/40 border border-white/6" placeholder="Email" />
-              <input className="p-3 rounded bg-black/40 border border-white/6" placeholder="CV link (upload coming soon)" />
-              <div className="flex items-center gap-3 mt-2">
-                <button className="px-4 py-2 rounded bg-[#0F4BE5]">Submit Application</button>
-                <button className="px-4 py-2 rounded border border-white/10" onClick={()=>alert('Login required (mock)')}>Login to apply</button>
-              </div>
-              <div className="text-xs text-gray-400 mt-2">(At launch this is a mock flow. Real submissions and file upload will be enabled after backend integration.)</div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+              <h4 className="text-lg font-semibold">For Employers</
