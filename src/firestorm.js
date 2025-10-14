@@ -1,12 +1,18 @@
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "./firebase"; // your Firestore instance
+// src/firebase.js
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-const fetchJobs = async () => {
-  const querySnapshot = await getDocs(collection(db, "jobs"));
-  return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+const firebaseConfig = {
+  apiKey: "YOUR_FIREBASE_API_KEY",
+  authDomain: "kairah.firebaseapp.com",
+  projectId: "kairah",
+  storageBucket: "kairah.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID",
 };
 
-const fetchTasks = async () => {
-  const querySnapshot = await getDocs(collection(db, "tasks"));
-  return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-};
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const provider = new GoogleAuthProvider();
+export const db = getFirestore(app);
