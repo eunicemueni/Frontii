@@ -263,4 +263,40 @@ export default function App() {
               <p className="mb-3">Post tasks or remote jobs and pay upfront. SkillMatch will hold funds securely and distribute payouts to workers once tasks are verified.</p>
               <p className="mb-3">Post a Task (Coming Soon) — set task count, reward per task, and target criteria. Employers do not see how workers are paid; payout distribution is managed by the platform admin.</p>
               <div className="mt-4 flex gap-3">
-                <button className="px-4 py-
+                <button className="px-4 py-2 rounded bg-[#D4AF37] text-black font-semibold">Sign Up as Employer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* APPLY MODAL */}
+      {showApply && selectedJob && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="max-w-md w-full bg-[#071124] rounded-xl p-6 border border-white/6">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-lg font-semibold">Apply: {selectedJob.title}</h4>
+              <button onClick={()=>setShowApply(false)} className="px-2 py-1">Close</button>
+            </div>
+            <form className="space-y-4">
+              <div>
+                <label className="block text-sm text-gray-300 mb-1">Full Name</label>
+                <input className="w-full px-3 py-2 rounded bg-white/5 border border-white/10 text-white" placeholder="Your Name" />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-300 mb-1">Email</label>
+                <input className="w-full px-3 py-2 rounded bg-white/5 border border-white/10 text-white" placeholder="you@example.com" />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-300 mb-1">Resume / CV (URL)</label>
+                <input className="w-full px-3 py-2 rounded bg-white/5 border border-white/10 text-white" placeholder="Link to resume" />
+              </div>
+              <button className="w-full px-4 py-2 rounded bg-[#0F4BE5] font-semibold">Submit Application</button>
+            </form>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
