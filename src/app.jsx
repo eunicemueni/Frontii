@@ -1,7 +1,7 @@
 // frontend/src/App.jsx
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Logo from "./assets/skillmatch-logo.png"; // place your black-gold logo here
+import Logo from "./assets/skillmatch-logo.png"; // SkillMatch black-gold logo
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -35,14 +35,8 @@ export default function App() {
     { id: "diamond", name: "Diamond", price: "$29/mo", features: ["AI-matched gigs", "Instant payouts", "Priority support"] }
   ];
 
-  // close modals on overlay click
-  const closeModal = (setter) => (e) => {
-    if (e.target === e.currentTarget) setter(false);
-  };
-
   return (
     <div className="min-h-screen bg-[#0B0E15] text-gray-100 antialiased">
-      {/* Shimmer diagonal keyframes */}
       <style>{`
         @keyframes shimmer-diag {
           0% { background-position: -600px -600px; }
@@ -72,7 +66,7 @@ export default function App() {
             </div>
 
             <div className="flex items-center gap-3">
-              <button type="button" onClick={() => setShowPricing(true)} className="hidden sm:inline-block px-3 py-2 rounded-md bg-[#102A7A] hover:bg-[#0D1F62]">Plans</button>
+              <button onClick={() => setShowPricing(true)} className="hidden sm:inline-block px-3 py-2 rounded-md bg-[#102A7A] hover:bg-[#0D1F62]">Plans</button>
               <a href="#login" className="px-3 py-2 rounded-md border border-white/10 hover:border-[#D4AF37] text-sm">Login</a>
               <a href="#signup" className="px-3 py-2 rounded-md bg-[#D4AF37] text-black font-semibold text-sm">Signup</a>
             </div>
@@ -98,8 +92,22 @@ export default function App() {
 
           <div className="max-w-6xl mx-auto px-6 text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+              {/* Hero Logo with shimmer + hover */}
               <div className="mx-auto w-full h-auto mb-6 flex justify-center">
-                <img src={Logo} alt="SkillMatch logo" className="w-64 md:w-80 object-contain drop-shadow-lg" />
+                <motion.img
+                  src={Logo}
+                  alt="SkillMatch logo"
+                  className="w-64 md:w-80 object-contain drop-shadow-lg cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  animate={{
+                    filter: [
+                      "drop-shadow(0 0 0px #D4AF37)",
+                      "drop-shadow(0 0 20px #D4AF37)",
+                      "drop-shadow(0 0 0px #D4AF37)"
+                    ],
+                  }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                />
               </div>
 
               <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">Find Real Jobs & Micro Tasks That Pay Instantly</h1>
@@ -108,7 +116,7 @@ export default function App() {
               <div className="flex items-center justify-center gap-4 flex-wrap">
                 <a href="#jobs" className="px-6 py-3 rounded-lg bg-[#0F4BE5] font-semibold hover:shadow-lg">Explore Jobs</a>
                 <a href="#tasks" className="px-6 py-3 rounded-lg bg-[#D4AF37] text-black font-semibold hover:shadow-lg">Start Earning</a>
-                <button type="button" onClick={() => setShowEmployer(true)} className="px-4 py-3 rounded-lg border border-white/10">Hire Skilled Workers</button>
+                <button onClick={() => setShowEmployer(true)} className="px-4 py-3 rounded-lg border border-white/10">Hire Skilled Workers</button>
               </div>
             </motion.div>
           </div>
@@ -147,8 +155,8 @@ export default function App() {
                     <p className="text-sm text-gray-300">{j.company} • {j.type}</p>
                     <p className="text-sm text-gray-300 mt-2">{j.salary}</p>
                     <div className="mt-4 flex items-center gap-3">
-                      <button type="button" onClick={() => { setSelectedJob(j); setShowApply(true); }} className="px-3 py-2 rounded bg-[#0F4BE5]">Apply Now</button>
-                      <button type="button" className="px-3 py-2 rounded border border-white/10">Save</button>
+                      <button onClick={() => { setSelectedJob(j); setShowApply(true); }} className="px-3 py-2 rounded bg-[#0F4BE5]">Apply Now</button>
+                      <button className="px-3 py-2 rounded border border-white/10">Save</button>
                     </div>
                   </div>
                 ))}
@@ -173,7 +181,7 @@ export default function App() {
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="text-sm font-semibold text-[#D4AF37]">${t.reward.toFixed(2)}</div>
-                      <button type="button" onClick={() => setShowPricing(true)} className="px-3 py-2 rounded bg-[#0F4BE5]">Start</button>
+                      <button onClick={() => setShowPricing(true)} className="px-3 py-2 rounded bg-[#0F4BE5]">Start</button>
                     </div>
                   </div>
                 ))}
@@ -185,7 +193,7 @@ export default function App() {
             </div>
 
             <div className="mt-6">
-              <button type="button" onClick={() => setShowEmployer(true)} className="px-4 py-2 rounded border border-white/10">For Employers</button>
+              <button onClick={() => setShowEmployer(true)} className="px-4 py-2 rounded border border-white/10">For Employers</button>
             </div>
           </div>
         </section>
@@ -219,7 +227,7 @@ export default function App() {
             <p className="text-gray-300 mb-4">Sign up free and start earning today — the marketplace is live.</p>
             <div className="flex items-center justify-center gap-4">
               <a href="#signup" className="px-6 py-3 rounded bg-[#D4AF37] text-black font-semibold">Join SkillMatch Now</a>
-              <button type="button" onClick={() => setShowPricing(true)} className="px-6 py-3 rounded border border-white/10">See Pricing</button>
+              <button onClick={() => setShowPricing(true)} className="px-6 py-3 rounded border border-white/10">See Pricing</button>
             </div>
           </div>
         </section>
@@ -232,11 +240,11 @@ export default function App() {
 
       {/* PRICING MODAL */}
       {showPricing && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={closeModal(setShowPricing)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="max-w-3xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-xl font-semibold">Pricing & Plans</h4>
-              <button type="button" onClick={()=>setShowPricing(false)} className="px-2 py-1">Close</button>
+              <button onClick={()=>setShowPricing(false)} className="px-2 py-1">Close</button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -248,9 +256,9 @@ export default function App() {
                     {t.features.map((f,i) => <li key={i}>• {f}</li>)}
                   </ul>
                   <div className="flex items-center gap-2">
-                    <button type="button" className="px-3 py-2 rounded bg-[#0F4BE5]">Subscribe</button>
-                    <button type="button" className="px-2 py-1 text-sm border border-white/10">PayPal</button>
-                    <button type="button" className="px-2 py-1 text-sm border border-white/10">Stripe</button>
+                    <button className="px-3 py-2 rounded bg-[#0F4BE5]">Subscribe</button>
+                    <button className="px-2 py-1 text-sm border border-white/10">PayPal</button>
+                    <button className="px-2 py-1 text-sm border border-white/10">Stripe</button>
                   </div>
                   <div className="mt-2 text-xs text-gray-400">(Payment integrations coming soon)</div>
                 </div>
@@ -264,7 +272,39 @@ export default function App() {
 
       {/* EMPLOYER MODAL */}
       {showEmployer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={closeModal(setShowEmployer)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="max-w-2xl w-full bg-[#071124] rounded-xl p-6 border border-white/6">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold">For Employers</
+              <h4 className="text-lg font-semibold">For Employers</h4>
+              <button onClick={()=>setShowEmployer(false)} className="px-2 py-1">Close</button>
+            </div>
+
+            <div className="text-gray-300">
+              <p className="mb-2">Post jobs or micro-tasks instantly. Set payout and SkillMatch holds the funds securely.</p>
+              <p>Dashboard with analytics, auto-matching workers, and payouts will be live soon.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MOCK APPLY MODAL */}
+      {showApply && selectedJob && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="max-w-md w-full bg-[#071124] rounded-xl p-6 border border-white/6">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-lg font-semibold">Apply to {selectedJob.title}</h4>
+              <button onClick={()=>setShowApply(false)} className="px-2 py-1">Close</button>
+            </div>
+            <div className="text-gray-300">
+              <p className="mb-4">This is a mock apply flow for demo purposes.</p>
+              <input type="text" placeholder="Your Full Name" className="w-full mb-2 p-2 rounded bg-white/5 border border-white/10 text-white" />
+              <input type="email" placeholder="Your Email" className="w-full mb-2 p-2 rounded bg-white/5 border border-white/10 text-white" />
+              <textarea placeholder="Cover Letter" className="w-full mb-2 p-2 rounded bg-white/5 border border-white/10 text-white" />
+              <button className="w-full py-2 rounded bg-[#D4AF37] text-black font-semibold">Submit Application</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
